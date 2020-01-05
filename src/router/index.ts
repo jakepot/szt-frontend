@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Review from "../views/Review.vue";
 import NewSong from "../views/NewSong.vue";
+import Artists from "../views/Artists.vue";
+import Genres from "../views/Genres.vue";
 
 Vue.use(VueRouter);
 
@@ -30,6 +32,16 @@ const routes = [
     path: "/songs/new",
     name: "newSong",
     component: NewSong
+  },
+  {
+    path: "/artists",
+    name: "artists",
+    component: Artists
+  },
+  {
+    path: "/genres",
+    name: "genres",
+    component: Genres
   }
 ];
 

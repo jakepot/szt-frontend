@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app>
+    <v-navigation-drawer app v-model="drawer">
       <v-list dense>
         <v-list-item link to="/review/1">
           <v-list-item-action>
@@ -34,10 +34,16 @@
             <v-list-item-title>Genres</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="login()">
+          <v-list-item-content>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar app color="primary" dark>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         SZIT Projekt
       </div>
@@ -55,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <div class="content-contaier">
+      <div class="content-container">
         <router-view></router-view>
       </div>
     </v-content>
@@ -66,18 +72,27 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  title: "App",
+  name: "App",
 
   components: {},
 
   data: () => ({
-    //
-  })
+    drawer: null
+  }),
+
+  methods: {
+    login() {
+      this.$store.dispatch("login", {
+        identifier: "test@user.pl",
+        password: "testuser"
+      });
+    }
+  }
 });
 </script>
 
 <style>
-.content-contaier {
+.content-container {
   padding: 12px;
 }
 </style>

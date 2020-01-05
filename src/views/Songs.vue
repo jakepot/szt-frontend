@@ -1,6 +1,6 @@
 <template>
   <div class="songs">
-    <h1>Reviewed songs <v-btn text to="/songs/new">Add</v-btn></h1>
+    <h1>Reviewed songs <v-btn v-if="this.$store.isLoggedIn" text to="/songs/new">Add</v-btn></h1>
     <!--    <div class="card-container">-->
     <v-container>
       <v-row>

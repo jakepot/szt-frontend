@@ -25,13 +25,6 @@
             required
           ></v-text-field>
 
-          <!--    <v-text-field-->
-          <!--      v-model="email"-->
-          <!--      :rules="emailRules"-->
-          <!--      label="E-mail"-->
-          <!--      required-->
-          <!--    ></v-text-field>-->
-
           <v-autocomplete
             v-model="artist"
             :items="artists"
@@ -71,8 +64,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "NewSong",
   data: () => ({
@@ -89,7 +80,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        axios
+        this.$http
           .post(
             "http://localhost:1337/songs",
             {
@@ -112,26 +103,26 @@ export default {
     }
   },
   mounted() {
-    axios
-      .post("http://localhost:1337/auth/local", {
-        identifier: "test@user.pl",
-        password: "testuser"
-      })
-      .then(response => {
-        // Handle success.
-        console.log("Well done!");
-        console.log("User profile", response.data.user);
-        console.log("User token", response.data.jwt);
-        this.token = response.data.jwt;
-      })
-      .catch(error => {
-        // Handle error.
-        console.log("An error occurred:", error);
-      });
-    axios
+    // this.$http
+    //   .post("http://localhost:1337/auth/local", {
+    //     identifier: "test@user.pl",
+    //     password: "testuser"
+    //   })
+    //   .then(response => {
+    //     // Handle success.
+    //     console.log("Well done!");
+    //     console.log("User profile", response.data.user);
+    //     console.log("User token", response.data.jwt);
+    //     this.token = response.data.jwt;
+    //   })
+    //   .catch(error => {
+    //     // Handle error.
+    //     console.log("An error occurred:", error);
+    //   });
+    this.$http
       .get("http://localhost:1337/artists")
       .then(response => (this.artists = response.data));
-    axios
+    this.$http
       .get("http://localhost:1337/genres")
       .then(response => (this.genres = response.data));
   }
