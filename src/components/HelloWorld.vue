@@ -78,7 +78,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "HelloWorld",
+  title: "HelloWorld",
 
   data: () => ({
     ecosystem: [
