@@ -1,25 +1,26 @@
 <template>
   <div class="songs">
-    <h1>Reviewed songs <v-btn v-if="this.$store.isLoggedIn" text to="/songs/new">Add</v-btn></h1>
-    <!--    <div class="card-container">-->
     <v-container>
+      <h1>
+        Songs
+        <v-btn v-if="loggedIn" text to="/songs/new">Add</v-btn>
+      </h1>
       <v-row>
-        <v-col v-for="rst in restaurants" :key="rst.id" cols="4">
-          <!--          <v-card class="mx-auto" max-width="344" outlined>-->
+        <v-col v-for="song in songs" :key="song.id" cols="4">
           <v-card outlined>
             <v-list-item three-line>
               <v-list-item-content>
                 <div class="overline mb-4">SONG</div>
                 <v-list-item-title class="headline mb-1">
-                  {{ rst.title }}
+                  {{ song.title }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{
-                  rst.artist.name
-                }}</v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  {{ song.artist.name }}
+                </v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-avatar tile size="80" color="grey">
-                <img :src="rst.cover_url" />
+                <img :src="song.cover_url" />
               </v-list-item-avatar>
             </v-list-item>
 
@@ -31,28 +32,26 @@
         </v-col>
       </v-row>
     </v-container>
-    <!--    </div>-->
   </div>
 </template>
 
-<style>
-.card-container {
-  display: flex;
-}
-</style>
+<style></style>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "songs",
   data: () => ({
-    restaurants: []
+    songs: []
   }),
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   mounted() {
-    axios
+    this.$http
       .get("http://localhost:1337/songs")
-      .then(response => (this.restaurants = response.data));
+      .then(response => (this.songs = response.data));
   }
 };
 </script>

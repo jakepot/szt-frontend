@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app v-model="drawer">
       <v-list dense>
-        <v-list-item link to="/review/1">
+        <v-list-item link to="/reviews">
           <v-list-item-action>
             <v-icon>mdi-star-half</v-icon>
           </v-list-item-action>
@@ -34,12 +34,21 @@
             <v-list-item-title>Genres</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="login()">
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
       </v-list>
+      <template v-slot:append>
+        <v-list dense>
+          <v-list-item @click="login()">
+            <v-list-item-content>
+              <v-list-item-title>Login</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click="logout()">
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar app color="primary" dark>
@@ -86,6 +95,9 @@ export default Vue.extend({
         identifier: "test@user.pl",
         password: "testuser"
       });
+    },
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
 });
@@ -94,5 +106,10 @@ export default Vue.extend({
 <style>
 .content-container {
   padding: 12px;
+}
+
+.szt-drawer-bottom {
+  position: relative;
+  bottom: 0;
 }
 </style>

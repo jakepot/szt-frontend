@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Review from "../views/Review.vue";
+import Reviews from "../views/Reviews.vue";
+import NewReview from "../views/NewReview.vue";
 import NewSong from "../views/NewSong.vue";
 import Artists from "../views/Artists.vue";
 import Genres from "../views/Genres.vue";
@@ -27,6 +29,16 @@ const routes = [
     path: "/review/:id",
     name: "review",
     component: Review
+  },
+  {
+    path: "/reviews",
+    name: "reviews",
+    component: Reviews
+  },
+  {
+    path: "/reviews/new",
+    name: "newReview",
+    component: NewReview
   },
   {
     path: "/songs/new",

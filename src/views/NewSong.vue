@@ -81,20 +81,12 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.$http
-          .post(
-            "http://localhost:1337/songs",
-            {
-              title: this.title,
-              cover_url: this.coverUrl,
-              artist: this.artist,
-              genre: this.genre
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${this.token}`
-              }
-            }
-          )
+          .post("http://localhost:1337/songs", {
+            title: this.title,
+            cover_url: this.coverUrl,
+            artist: this.artist,
+            genre: this.genre
+          })
           .then(response => console.log(response));
       }
     },
