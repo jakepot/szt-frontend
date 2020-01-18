@@ -7,6 +7,7 @@ import NewReview from "../views/NewReview.vue";
 import NewSong from "../views/NewSong.vue";
 import Artists from "../views/Artists.vue";
 import Genres from "../views/Genres.vue";
+import Gallery from "../views/Gallery.vue";
 
 Vue.use(VueRouter);
 
@@ -54,6 +55,11 @@ const routes = [
     path: "/genres",
     name: "genres",
     component: Genres
+  },
+  {
+    path: "/gallery",
+    name: "gallery",
+    component: Gallery
   }
 ];
 

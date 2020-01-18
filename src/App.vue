@@ -34,6 +34,14 @@
             <v-list-item-title>Genres</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link to="/gallery">
+          <v-list-item-action>
+            <v-icon>mdi-image-multiple</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Gallery</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
       <template v-slot:append>
         <v-list dense>
@@ -64,7 +72,7 @@
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">buy my mixtape</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
@@ -106,10 +114,5 @@ export default Vue.extend({
 <style>
 .content-container {
   padding: 12px;
-}
-
-.szt-drawer-bottom {
-  position: relative;
-  bottom: 0;
 }
 </style>
