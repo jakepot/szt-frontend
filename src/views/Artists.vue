@@ -65,9 +65,13 @@
             </v-dialog>
           </h1>
         </v-col>
-        <v-col>
-          <v-text-field dense label="Filter"></v-text-field>
-        </v-col>
+<!--        <v-col>-->
+<!--          <v-text-field-->
+<!--            dense-->
+<!--            label="Filter"-->
+<!--            v-model="filterText"-->
+<!--          ></v-text-field>-->
+<!--        </v-col>-->
       </v-row>
 
       <v-row>
@@ -128,7 +132,9 @@ export default {
     deleteId: null,
     name: null,
     date: null,
-    menu: false
+    menu: false,
+    filterText: "",
+    filteredArtists: []
   }),
   computed: {
     loggedIn() {

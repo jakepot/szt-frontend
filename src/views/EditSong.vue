@@ -51,11 +51,11 @@
             class="mr-4"
             @click="validate"
           >
-            Add
+            Update
           </v-btn>
 
-          <v-btn color="error" class="mr-4" @click="reset">
-            Reset Form
+          <v-btn color="error" class="mr-4" to="/songs">
+            Return
           </v-btn>
         </v-col>
       </v-row>
@@ -67,7 +67,7 @@
 export default {
   name: "NewSong",
   data: () => ({
-    token: null,
+    id: "",
     valid: true,
     title: "",
     coverUrl: "",
@@ -81,7 +81,7 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.$http
-          .post("http://localhost:1337/songs", {
+          .put("http://localhost:1337/songs/" + this.id, {
             title: this.title,
             cover_url: this.coverUrl,
             artist: this.artist,
@@ -95,6 +95,14 @@ export default {
     }
   },
   mounted() {
+    this.id = this.$route.params.id;
+    this.$http.get("http://localhost:1337/songs/" + this.id).then(response => {
+      const data = response.data;
+      this.title = data.title;
+      this.coverUrl = data.cover_url;
+      this.artist = data.artist;
+      this.genre = data.genre;
+    });
     this.$http
       .get("http://localhost:1337/artists")
       .then(response => (this.artists = response.data));

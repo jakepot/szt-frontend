@@ -4,7 +4,9 @@ import Home from "../views/Home.vue";
 import Review from "../views/Review.vue";
 import Reviews from "../views/Reviews.vue";
 import NewReview from "../views/NewReview.vue";
+import EditReview from "../views/EditReview.vue";
 import NewSong from "../views/NewSong.vue";
+import EditSong from "../views/EditSong.vue";
 import Artists from "../views/Artists.vue";
 import Genres from "../views/Genres.vue";
 import Gallery from "../views/Gallery.vue";
@@ -20,11 +22,7 @@ const routes = [
   {
     path: "/songs",
     name: "songs",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Songs.vue")
+    component: () => import("../views/Songs.vue")
   },
   {
     path: "/review/:id",
@@ -42,9 +40,19 @@ const routes = [
     component: NewReview
   },
   {
+    path: "/reviews/:id/edit",
+    name: "editReview",
+    component: EditReview
+  },
+  {
     path: "/songs/new",
     name: "newSong",
     component: NewSong
+  },
+  {
+    path: "/songs/:id/edit",
+    name: "editSong",
+    component: EditSong
   },
   {
     path: "/artists",

@@ -52,11 +52,11 @@
               class="mr-4"
               @click="validate"
             >
-              Add
+              Update
             </v-btn>
 
-            <v-btn color="error" class="mr-4" @click="reset">
-              Reset Form
+            <v-btn color="error" class="mr-4" to="/reviews">
+              Go back
             </v-btn>
           </v-col>
         </v-row>
@@ -68,6 +68,7 @@
 <script>
 export default {
   data: () => ({
+    id: "",
     title: "",
     content: "",
     text: "",
@@ -78,12 +79,24 @@ export default {
     ratings: [...Array(11).keys()]
   }),
   mounted() {
+    this.id = this.$route.params.id;
     this.$http
       .get("http://localhost:1337/songs")
       .then(
         response =>
-          (this.songs = response.data.filter(song => song.review === null))
+          (this.songs = response.data.filter(
+            song => song.review === null || song.review.id === Number(this.id)
+          ))
       );
+    this.$http
+      .get("http://localhost:1337/reviews/" + this.id)
+      .then(response => {
+        const data = response.data;
+        this.title = data.Title;
+        this.rating = data.rating;
+        this.song = data.song.id;
+        this.content = data.text;
+      });
   },
   methods: {
     selectionText(item) {
@@ -91,21 +104,15 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        console.log(this.song);
         this.$http
-          .post("http://localhost:1337/reviews", {
+          .put("http://localhost:1337/reviews/" + this.id, {
             Title: this.title,
             song: this.song,
             rating: this.rating,
             text: this.content
           })
-          .then(
-            response => (window.location.href = "/review/" + response.data.id)
-          );
+          .then(response => window.location.href = "/review/" + response.data.id);
       }
-    },
-    reset() {
-      this.$refs.form.reset();
     }
   }
 };
