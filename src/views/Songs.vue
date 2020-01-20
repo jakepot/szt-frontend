@@ -39,6 +39,9 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <v-col>
+          <div v-if="noResults">Nothing to see here.</div>
+        </v-col>
       </v-row>
     </v-container>
     <v-dialog v-model="deleteDialog" max-width="300px">
@@ -61,7 +64,9 @@
 <script>
 export default {
   name: "songs",
+  props: ["artist", "genre"],
   data: () => ({
+    fetched: false,
     url: "http://localhost:1337/songs",
     songs: [],
     deleteDialog: false,
@@ -71,6 +76,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    noResults() {
+      return this.fetched === true && this.songs.length === 0;
     }
   },
   mounted() {
@@ -78,7 +86,17 @@ export default {
   },
   methods: {
     fetchSongs() {
-      this.$http.get(this.url).then(response => (this.songs = response.data));
+      let params = "?";
+      if (this.artist) {
+        params += "artist=" + this.artist;
+      }
+      if (this.genre) {
+        params += "genre=" + this.genre;
+      }
+      this.$http.get(this.url + params).then(response => {
+        this.songs = response.data;
+        this.fetched = true;
+      });
     },
     remove(id) {
       if (!this.deleteDialog) {

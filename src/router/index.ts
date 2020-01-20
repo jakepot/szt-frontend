@@ -22,6 +22,7 @@ const routes = [
   {
     path: "/songs",
     name: "songs",
+    props: true,
     component: () => import("../views/Songs.vue")
   },
   {

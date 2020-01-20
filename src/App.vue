@@ -45,14 +45,14 @@
       </v-list>
       <template v-slot:append>
         <v-list dense>
-          <v-list-item @click="login()">
+          <v-list-item v-if="!loggedIn" @click="openLogin()">
             <v-list-item-content>
-              <v-list-item-title>Login</v-list-item-title>
+              <v-list-item-title>Log in</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item @click="logout()">
+          <v-list-item v-if="loggedIn" @click="logout()">
             <v-list-item-content>
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>Log out</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -82,6 +82,52 @@
         <router-view></router-view>
       </div>
     </v-content>
+
+    <v-dialog
+      v-model="loginDialog"
+      max-width="500px"
+      @input="v => v || clearData()"
+    >
+      <v-card>
+        <v-card-title>
+          Log In
+        </v-card-title>
+        <v-form @submit="login">
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="username"
+                    label="Username"
+                    prepend-icon="mdi-account"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="password"
+                    label="Password"
+                    type="password"
+                    prepend-icon="mdi-lock"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col v-if="authError" cols="12">
+                  <v-alert type="error">
+                    Login failed
+                  </v-alert>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="login">Login</v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -94,18 +140,47 @@ export default Vue.extend({
   components: {},
 
   data: () => ({
-    drawer: null
+    drawer: null,
+    username: null,
+    password: null,
+    loginDialog: false,
+    authError: false
   }),
 
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+
   methods: {
+    openLogin() {
+      this.loginDialog = true;
+    },
     login() {
-      this.$store.dispatch("login", {
-        identifier: "test@user.pl",
-        password: "testuser"
-      });
+      this.$store
+        .dispatch("login", {
+          // identifier: "test@user.pl",
+          identifier: this.username,
+          // password: "testuser"
+          password: this.password
+        })
+        .then(
+          () => {
+            this.authError = false;
+            this.loginDialog = false;
+          },
+          () => {
+            this.authError = true;
+          }
+        );
     },
     logout() {
       this.$store.dispatch("logout");
+    },
+    clearData() {
+      this.username = null;
+      this.password = null;
     }
   }
 });

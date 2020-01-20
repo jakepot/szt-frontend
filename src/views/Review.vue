@@ -3,11 +3,13 @@
     <v-container>
       <v-col>
         <h1 class="page-title">{{ rev.Title }}</h1>
-        <div class="subtitle-2 mb-4">Posted on {{ rev.created_at | formatDate }}</div>
+        <div class="subtitle-2 mb-4">
+          Posted on {{ rev.created_at | formatDate }}
+        </div>
         <v-card outlined class="mb-4">
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="overline mb-4">SONG</div>
+              <div class="overline mb-4">Genre: {{ genre }}</div>
               <v-list-item-title class="headline mb-1">
                 {{ song.title }}
               </v-list-item-title>
@@ -47,6 +49,9 @@ export default {
   computed: {
     fbHref() {
       return "http://my-awesome-music-review-page.com" + this.$route.path;
+    },
+    genre() {
+      return this.song.genre ? this.song.genre.name : "Not specified";
     }
   },
   mounted() {

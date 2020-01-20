@@ -65,13 +65,6 @@
             </v-dialog>
           </h1>
         </v-col>
-<!--        <v-col>-->
-<!--          <v-text-field-->
-<!--            dense-->
-<!--            label="Filter"-->
-<!--            v-model="filterText"-->
-<!--          ></v-text-field>-->
-<!--        </v-col>-->
       </v-row>
 
       <v-row>
@@ -83,7 +76,11 @@
           <v-card class="px-2" outlined>
             <v-layout row justify-space-between>
               <div>
-                <v-card-title>{{ artist.name }}</v-card-title>
+                <v-card-title @click="goToSongs(artist.id)">
+                  <span class="clickable">
+                    {{ artist.name }}
+                  </span></v-card-title
+                >
                 <v-card-subtitle>
                   BORN:
                   {{
@@ -93,7 +90,7 @@
                   Songs: {{ artist.songs.length }}
                 </v-card-subtitle>
               </div>
-              <v-card-actions>
+              <v-card-actions v-if="loggedIn">
                 <v-btn text @click="edit(artist.id)">EDIT</v-btn>
                 <v-btn text @click="remove(artist.id)">DELETE</v-btn>
               </v-card-actions>
@@ -174,9 +171,16 @@ export default {
         this.snackbar = true;
         this.fetchArtists();
       });
+    },
+    goToSongs(id) {
+      this.$router.push({ name: "songs", params: { artist: id } });
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.clickable {
+  cursor: pointer;
+}
+</style>
